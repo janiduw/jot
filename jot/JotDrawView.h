@@ -94,6 +94,20 @@
 - (UIImage *)drawOnImage:(UIImage *)image;
 
 /**
+ *  Overlays the drawing on the given background image, rendering
+ *  the drawing at the full resolution of the image.
+ *
+ *  @param image The background image to draw on top of.
+ *  @param frame Frame of the image
+ *
+ *  @return An image of the rendered drawing on the background image.
+ *
+ *  @note Call drawOnImage: in JotViewController
+ *  to trigger this method.
+ */
+- (UIImage *)drawOnImage:(UIImage *)image frame:(CGRect)frame;
+
+/**
  *  Renders the drawing at full resolution for the given size.
  *
  *  @param size The size of the image to return.

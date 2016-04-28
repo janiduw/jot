@@ -271,6 +271,13 @@
     return [self.textView drawTextOnImage:drawImage];
 }
 
+- (UIImage *)drawOnImage:(UIImage *)image frame:(CGRect)frame
+{
+    UIImage *drawImage = [self.drawView drawOnImage:image frame: frame];
+    
+    return [self.textView drawTextOnImage:drawImage];
+}
+
 - (UIImage *)renderImage
 {
     return [self renderImageWithScale:1.f];

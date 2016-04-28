@@ -186,6 +186,17 @@ typedef NS_ENUM(NSUInteger, JotViewState){
 - (UIImage *)drawOnImage:(UIImage *)image;
 
 /**
+ *  Overlays the drawing and text on the given background image at the full
+ *  resolution of the image.
+ *
+ *  @param image The background image to draw on top of.
+ *  @param frame Frame of the image
+ *
+ *  @return An image of the rendered drawing and text on the background image.
+ */
+- (UIImage *)drawOnImage:(UIImage *)image frame:(CGRect)frame;
+
+/**
  *  Renders the drawing and text at the view's size with a transparent background.
  *
  *  @return An image of the rendered drawing and text.

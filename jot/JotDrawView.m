@@ -161,7 +161,7 @@ CGFloat const kJotRelativeMinStrokeWidth = 0.4f;
     if (self.cachedImage) {
         [self.cachedImage drawAtPoint:CGPointZero];
     }
-
+    
     [self.bezierPath jotDrawBezier];
     self.bezierPath = nil;
     
@@ -183,7 +183,7 @@ CGFloat const kJotRelativeMinStrokeWidth = 0.4f;
 - (void)drawRect:(CGRect)rect
 {
     [self.cachedImage drawInRect:rect];
-
+    
     [self.bezierPath jotDrawBezier];
 }
 
@@ -214,21 +214,30 @@ CGFloat const kJotRelativeMinStrokeWidth = 0.4f;
 - (UIImage *)renderDrawingWithSize:(CGSize)size
 {
     return [self drawAllPathsImageWithSize:size
-                           backgroundImage:nil];
+                           backgroundImage:nil frame: CGRectZero];
 }
 
-- (UIImage *)drawOnImage:(UIImage *)image
+- (UIImage *)drawOnImage:(UIImage *)image {
+    return [self drawAllPathsImageWithSize:image.size backgroundImage:image frame: CGRectZero];
+}
+
+- (UIImage *)drawOnImage:(UIImage *)image frame:(CGRect)frame
 {
-    return [self drawAllPathsImageWithSize:image.size backgroundImage:image];
+    return [self drawAllPathsImageWithSize:image.size backgroundImage:image frame: frame];
 }
 
-- (UIImage *)drawAllPathsImageWithSize:(CGSize)size backgroundImage:(UIImage *)backgroundImage
+- (UIImage *)drawAllPathsImageWithSize:(CGSize)size backgroundImage:(UIImage *)backgroundImage frame:(CGRect)frame
 {
     CGFloat scale = size.width / CGRectGetWidth(self.bounds);
     
     UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, scale);
     
-    [backgroundImage drawInRect:CGRectMake(0.f, 0.f, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds))];
+    // If Rect is not provided, get the bound sizes
+    if (CGRectEqualToRect(frame, CGRectZero)) {
+        frame = CGRectMake(0.f, 0.f, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
+    }
+    
+    [backgroundImage drawInRect:frame];
     
     [self drawAllPaths];
     
